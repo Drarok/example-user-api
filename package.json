@@ -4,6 +4,7 @@
   "description": "My attempt at tech test #1",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "node_modules/.bin/mocha specs"
   },
   "author": "Mat Gadd <mat@zerifas.com>",
