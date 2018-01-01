@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 
-const conn = new Sequelize('sqlite::memory:');
+const conn = new Sequelize('sqlite::memory:', {
+  logging: false,
+});
 
 const User = conn.define(
   'user',
@@ -14,7 +16,7 @@ const User = conn.define(
     surname: Sequelize.STRING,
   },
   {
-    timestamps: false
+    timestamps: false,
   }
 );
 
