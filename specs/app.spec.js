@@ -131,6 +131,18 @@ describe('Test users API', () => {
             .expect(400);
         });
     });
+
+    it('rejects invalid requests', () => {
+      let user = {};
+
+      return request(app)
+        .post('/users')
+        .send(user)
+        .expect(400)
+        .expect((res) => {
+          assert.equal(res.body.error, 'Missing required fields: forename, surname');
+        });
+    });
   });
 
   describe('PATCH /users/:userId', () => {
