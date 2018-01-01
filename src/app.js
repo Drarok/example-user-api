@@ -53,7 +53,15 @@ app.post('/users', bodyParser.json(), (req, res, next) => {
         .location(`/users/${user.id}`)
         .json(user);
     })
-    .catch(next);
+    .catch((err) => {
+      for (const error of err.errors) {
+        if (error.type === 'unique violation' && error.path === 'email') {
+          return res.status(400).json({ error: 'Email address already exists' });
+        }
+      }
+
+      next(err);
+    });
 });
 
 app.put('/users/:userId(\\d+)', bodyParser.json(), (req, res, next) => {

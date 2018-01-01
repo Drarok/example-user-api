@@ -119,6 +119,18 @@ describe('Test users API', () => {
             });
         });
     });
+
+    it('rejects duplicate emails', () => {
+      const user = testUsers[0];
+
+      return models.User.create(user)
+        .then(() => {
+          return request(app)
+            .post('/users')
+            .send(user)
+            .expect(400);
+        });
+    });
   });
 
   describe('PATCH /users/:userId', () => {
