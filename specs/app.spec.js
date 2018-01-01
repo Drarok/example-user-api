@@ -133,14 +133,12 @@ describe('Test users API', () => {
     });
 
     it('rejects invalid requests', () => {
-      let user = {};
-
       return request(app)
         .post('/users')
-        .send(user)
+        .send({})
         .expect(400)
         .expect((res) => {
-          assert.equal(res.body.error, 'Missing required fields: forename, surname');
+          assert.equal(res.body.error, 'Missing required fields: forename, surname, email');
         });
     });
   });
@@ -191,12 +189,13 @@ describe('Test users API', () => {
     it('updates all data', () => {
       const user = testUsers[0];
       const update = {
+        forename: 'Matthew',
         surname: 'Smith',
       };
 
       const expected = {
         email: 'mat@example.com',
-        forename: null,
+        forename: 'Matthew',
         surname: 'Smith',
       };
 
@@ -210,6 +209,21 @@ describe('Test users API', () => {
               for (let field in expected) {
                 assert.equal(res.body[field], expected[field]);
               }
+            });
+        });
+    });
+
+    it('rejects invalid requests', () => {
+      const user = testUsers[0];
+
+      return models.User.create(user)
+        .then(() => {
+          return request(app)
+            .put('/users/1')
+            .send({})
+            .expect(400)
+            .expect((res) => {
+              assert.equal(res.body.error, 'Missing required fields: forename, surname');
             });
         });
     });
