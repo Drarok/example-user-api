@@ -1,4 +1,4 @@
-# User API
+# User API [![Build Status](https://travis-ci.org/Drarok/example-user-api.svg?branch=develop)](https://travis-ci.org/Drarok/example-user-api)
 
 This project is a simple API, managing a user persistence layer.
 
